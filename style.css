@@ -1,0 +1,22 @@
+/* Add a css reset */
+@import url("./normalize.css");
+
+/* Specify colors */
+:root {
+  --bg-clr: ;
+  --bg-lighter: ;
+  --text-clr: ;
+  --accent1-clr: ;
+  --accent2-clr: ;
+  --font-stack: font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+html {
+  min-height: 100vh;
+}
+body {
+  font-size: 1rem;
+  font-family: var(--font-stack);
+  background-color: var(--bg-clr);
+}
