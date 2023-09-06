@@ -25,6 +25,20 @@ body {
 h1 {
   text-align: center;
   font-size: 4rem;
+  padding: 2rem;
   font-weight: 500;
   text-shadow: 3px 3px var(--accent1-clr);
+}
+
+#game_board {
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  background-color: var(--text-clr);
+  width: 25rem;
+  height: 25rem;
+  margin: 4rem auto;
+  gap: 4px;
+}
+#game_board > div {
+  background-color: var(--bg-lighter);
 }
