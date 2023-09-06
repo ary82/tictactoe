@@ -3,13 +3,14 @@
 
 /* Specify colors */
 :root {
-  --bg-clr: ;
-  --bg-lighter: ;
-  --text-clr: ;
-  --accent1-clr: ;
-  --accent2-clr: ;
-  --font-stack: font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --bg-clr: #2e3440;
+  --bg-lighter: #3b4252;
+  --text-clr: #eceff4;
+  --accent1-clr: #5e81ac;
+  --accent2-clr: #a3be8c;
+  --accent3-clr: #bf616a;
+  --font-stack: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 html {
@@ -19,4 +20,11 @@ body {
   font-size: 1rem;
   font-family: var(--font-stack);
   background-color: var(--bg-clr);
+  color: var(--text-clr);
+}
+h1 {
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 500;
+  text-shadow: 3px 3px var(--accent1-clr);
 }
