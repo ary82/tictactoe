@@ -61,8 +61,8 @@ h1 {
   border-bottom-right-radius: 25%;
 }
 #game_board svg {
-  width: 6rem;
-  height: 6rem;
+  width: 6.5rem;
+  height: 6.5rem;
 }
 input[type="radio"] {
   appearance: none;
