@@ -8,6 +8,32 @@
     <title>Tic Tac Toe</title>
   </head>
   <body>
+    <!-- Definig Svgs for reuse -->
+    <svg
+      style="display: none"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+    >
+      <symbol id="x_svg">
+        <path
+          fill="currentColor"
+          d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
+        />
+      </symbol>
+    </svg>
+    <svg
+      style="display: none"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-3 -3 30 30"
+    >
+      <symbol id="o_svg">
+        <path
+          fill="currentColor"
+          d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
+        />
+      </symbol>
+    </svg>
+    <!-- Defining Svgs Finished -->
     <h1>Tic Tac Toe</h1>
     <div id="compete">
       <input type="radio" name="compete" value="" id="player2" />
@@ -29,19 +55,13 @@
       <input type="radio" name="xoro" value="" id="x" checked />
       <label for="x">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path
-            fill="currentColor"
-            d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"
-          />
+          <use href="#x_svg" />
         </svg>
       </label>
       <input type="radio" name="xoro" value="" id="o" />
       <label for="o">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -3 30 30">
-          <path
-            fill="currentColor"
-            d="M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z"
-          />
+          <use href="#o_svg" />
         </svg>
       </label>
     </div>
