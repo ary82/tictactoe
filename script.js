@@ -52,17 +52,11 @@ let gameboard = (() => {
       }
     }
   };
-  const terminate_game = () => {
-    if (_gameover) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const terminate_game = () => _gameover;
   return { terminate_game, array, clear_board, checkwin, checkdraw };
 })();
 
-let player = (xoro) => {
+const player = (xoro) => {
   const get_xoro = () => xoro;
   const playturn = (index) => {
     if (
@@ -75,6 +69,62 @@ let player = (xoro) => {
     }
   };
   return { get_xoro, playturn };
+};
+const computer = (xoro) => {
+  const { playturn } = player(xoro);
+  const start = () => {
+    if (turn) {
+      playturn(computerMoveLogic.move());
+    }
+  };
+  const computerMoveLogic = () => {
+    let difficulty = 3;
+    const optimumMove = () => {
+      let _bestScore = -Infinity;
+      let _bestMove;
+      for (let i = 0; i < 8; i++) {
+        if (typeof gameboard.array[i] === "undefined") {
+          let _score = minimax(gameboard.array, i);
+          if (_score > _bestScore) {
+            _bestScore = _score;
+            _bestMove = i;
+          }
+        }
+      }
+      return _bestMove;
+    };
+    const randomMove = () => {
+      let _allowedMoves = [];
+      for (let i = 0; i < 8; i++) {
+        if (typeof gameboard.array[i] === "undefined") {
+          _allowedMoves.push(i);
+        }
+      }
+      return _allowedMoves[Math.floor(Math.random() * _allowedMoves.length)];
+    };
+    const move = () => {
+      let _tempvar = Math.floor(Math.random() * 10);
+      if (difficulty === 0) {
+        return randomMove;
+      } else if (difficulty === 3) {
+        return optimumMove;
+      } else if (difficulty === 1) {
+        if (_tempvar <= 3) {
+          return optimumMove;
+        } else {
+          return randomMove;
+        }
+      } else {
+        if (_tempvar <= 7) {
+          return optimumMove;
+        } else {
+          return randomMove;
+        }
+      }
+    };
+    return { move };
+  };
+  return { start };
 };
 
 const gamecontroller = (() => {
