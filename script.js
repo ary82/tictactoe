@@ -61,13 +61,29 @@ const player = (sign) => {
   };
   const computer_logic = () => {
     let index = "undefined";
-    const minimax = () => {
-      let score;
+    const minimax = (board, is_maximising) => {
       if (game_controller.check_win("o")) {
         return 10;
       } else if (game_controller.check_win("x")) {
         return -10;
       } else if (game_controller.check_draw()) {
+        return 0;
+      }
+
+      if (is_maximising) {
+        let bestVal = -1000;
+        for (let i = 0; i < gameboard.possible_moves().length; i++) {
+          gameboard.array[i] = "o";
+          bestVal = Math.max(bestVal, minimax(gameboard.array, false));
+        }
+        return bestVal;
+      } else {
+        let bestVal = 1000;
+        for (let i = 0; i < gameboard.possible_moves().length; i++) {
+          gameboard.array[i] = "x";
+          bestVal = Math.min(bestVal, minimax(gameboard.array, false));
+        }
+        return bestVal;
       }
     };
     return index;
