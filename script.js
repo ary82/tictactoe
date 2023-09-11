@@ -1,12 +1,10 @@
 const gameboard = (() => {
   let array = new Array(9);
   array.fill(undefined);
-  let x_moves = [];
-  let o_moves = [];
 
   const possible_moves = () => {
     let _posssible_moves = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 9; i++) {
       if (typeof array[i] === "undefined") {
         _posssible_moves.push(i);
       }
@@ -28,8 +26,21 @@ const gameboard = (() => {
     [0, 4, 8],
     [2, 4, 6],
   ];
+  const check_win_situations = (arr) => {
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 3; j++) {
+        if (!arr.includes(win_situations[i][j])) {
+          break;
+        }
+        if (arr.includes(win_situations[i][j]) && j === 2) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
 
-  return { x_moves, o_moves, array, possible_moves, clear };
+  return { array, possible_moves, check_win_situations, clear };
 })();
 
 const player = (sign) => {
@@ -38,29 +49,72 @@ const player = (sign) => {
   const play_turn = (index) => {
     if (
       (game_controller.current_turn === get_sign()) &&
-      gameboard.possible_moves().includes(index)
+      gameboard.possible_moves().includes(index) &&
+      game_controller.check_running()
     ) {
       moves.push(index);
       gameboard.array[index] = get_sign();
-      game_controller.current_turn = "x" ? "o" : "x";
+      game_controller.current_turn = (sign === "x") ? "o" : "x";
+      game_controller.check_win(sign);
+      game_controller.check_draw()
     }
   };
-  return { get_sign, play_turn, moves };
+  const computer_logic = () => {
+    let index = "undefined";
+    return index;
+  };
+  return { get_sign, play_turn, moves, computer_logic };
 };
 
 const game_controller = (() => {
   const player1 = player("x");
   const player2 = player("o");
+  let _running = true;
   let current_turn = "x";
-  const check_win = () => {
+  const check_running = () => _running;
+  const check_win = (sign) => {
+    if (!check_running()) {
+      return;
+    }
+    if (sign === player1.get_sign()) {
+      if (gameboard.check_win_situations(player1.moves)) {
+        _running = false;
+        console.log(sign + " wins");
+      }
+    } else {
+      if (gameboard.check_win_situations(player2.moves)) {
+        _running = false;
+        console.log(sign + " wins");
+      }
+    }
   };
   const check_draw = () => {
+    if (!check_running()) {
+      return;
+    }
+    if (!gameboard.possible_moves().length) {
+      _running = false;
+      console.log("Drawww");
+    }
   };
-  return { player1, player2, current_turn };
+  return {
+    player1,
+    player2,
+    current_turn,
+    check_running,
+    check_win,
+    check_draw,
+  };
 })();
 
 console.log(gameboard.possible_moves());
+game_controller.player1.play_turn(0);
+game_controller.player2.play_turn(1);
+game_controller.player1.play_turn(2);
+game_controller.player2.play_turn(4);
 game_controller.player1.play_turn(3);
-console.log(gameboard.possible_moves());
-console.log(game_controller.player1.moves);
-console.log(game_controller.current_turn)
+game_controller.player2.play_turn(5);
+game_controller.player1.play_turn(7);
+game_controller.player2.play_turn(6);
+game_controller.player1.play_turn(8);
+console.log(gameboard.array);
