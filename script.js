@@ -56,11 +56,20 @@ const player = (sign) => {
       gameboard.array[index] = get_sign();
       game_controller.current_turn = (sign === "x") ? "o" : "x";
       game_controller.check_win(sign);
-      game_controller.check_draw()
+      game_controller.check_draw();
     }
   };
   const computer_logic = () => {
     let index = "undefined";
+    const minimax = () => {
+      let score;
+      if (game_controller.check_win("o")) {
+        return 10;
+      } else if (game_controller.check_win("x")) {
+        return -10;
+      } else if (game_controller.check_draw()) {
+      }
+    };
     return index;
   };
   return { get_sign, play_turn, moves, computer_logic };
@@ -74,28 +83,33 @@ const game_controller = (() => {
   const check_running = () => _running;
   const check_win = (sign) => {
     if (!check_running()) {
-      return;
+      return false;
     }
     if (sign === player1.get_sign()) {
       if (gameboard.check_win_situations(player1.moves)) {
         _running = false;
         console.log(sign + " wins");
+        return true;
       }
     } else {
       if (gameboard.check_win_situations(player2.moves)) {
         _running = false;
         console.log(sign + " wins");
+        return true;
       }
     }
+    return false;
   };
   const check_draw = () => {
     if (!check_running()) {
-      return;
+      return false;
     }
     if (!gameboard.possible_moves().length) {
       _running = false;
       console.log("Drawww");
+      return true;
     }
+    return false;
   };
   return {
     player1,
