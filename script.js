@@ -77,11 +77,13 @@ const game_controller = (() => {
     if (sign === player1.get_sign()) {
       if (gameboard.check_win_situations(player1.moves)) {
         _running = false;
+        display_controller.display_status(player1.get_sign(), true);
         return true;
       }
     } else {
       if (gameboard.check_win_situations(player2.moves)) {
         _running = false;
+        display_controller.display_status(player2.get_sign(), true);
         return true;
       }
     }
@@ -91,6 +93,7 @@ const game_controller = (() => {
     if (_running) {
       if (!gameboard.possible_moves().length) {
         _running = false;
+        display_controller.display_status("x", false);
         return true;
       }
     }
@@ -109,7 +112,7 @@ const game_controller = (() => {
 const display_controller = (() => {
   const ttt_html = document.querySelectorAll("#game_board > div");
   const comp_button = document.getElementById("computer");
-  const pl_buttons = document.querySelectorAll("input");
+  const pl_buttons = document.querySelectorAll("#compete > input");
   pl_buttons.forEach((element) => {
     element.addEventListener("input", () => {
       document.location.reload();
@@ -133,6 +136,14 @@ const display_controller = (() => {
   document.querySelector("button").addEventListener("click", () => {
     document.location.reload();
   });
+  const display_status = (sign, does_winner_exist) => {
+    const status = document.getElementById("status");
+    if (does_winner_exist) {
+      status.innerText = `${sign} wins!`;
+    } else {
+      status.innerText = "It's a draw!";
+    }
+  };
   const display_on_grid = () => {
     ttt_html.forEach((element) => {
       element.innerText = "";
@@ -159,5 +170,5 @@ const display_controller = (() => {
       }
     }
   };
-  return { display_on_grid };
+  return { display_on_grid, display_status };
 })();
