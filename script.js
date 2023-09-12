@@ -55,13 +55,18 @@ const player = (sign) => {
       moves.push(index);
       gameboard.array[index] = get_sign();
       game_controller.current_turn = (sign === "x") ? "o" : "x";
-      game_controller.check_win(sign);
-      game_controller.check_draw();
     }
   };
-  const computer_logic = () => {
+  const random_allowed_move = () => {
+    let _index = Math.floor(Math.random() * gameboard.possible_moves().length);
+    return gameboard.possible_moves()[_index];
   };
-  return { get_sign, play_turn, moves, computer_logic };
+  return {
+    get_sign,
+    play_turn,
+    moves,
+    random_allowed_move,
+  };
 };
 
 const game_controller = (() => {
@@ -71,32 +76,25 @@ const game_controller = (() => {
   let current_turn = "x";
   const check_running = () => _running;
   const check_win = (sign) => {
-    if (!check_running()) {
-      return false;
-    }
     if (sign === player1.get_sign()) {
       if (gameboard.check_win_situations(player1.moves)) {
         _running = false;
-        console.log(sign + " wins");
         return true;
       }
     } else {
       if (gameboard.check_win_situations(player2.moves)) {
         _running = false;
-        console.log(sign + " wins");
         return true;
       }
     }
     return false;
   };
   const check_draw = () => {
-    if (!check_running()) {
-      return false;
-    }
-    if (!gameboard.possible_moves().length) {
-      _running = false;
-      console.log("Drawww");
-      return true;
+    if (_running) {
+      if (!gameboard.possible_moves().length) {
+        _running = false;
+        return true;
+      }
     }
     return false;
   };
@@ -112,12 +110,6 @@ const game_controller = (() => {
 
 console.log(gameboard.possible_moves());
 game_controller.player1.play_turn(0);
-game_controller.player2.play_turn(1);
-game_controller.player1.play_turn(2);
-game_controller.player2.play_turn(4);
-game_controller.player1.play_turn(3);
-game_controller.player2.play_turn(5);
-game_controller.player1.play_turn(7);
-game_controller.player2.play_turn(6);
-game_controller.player1.play_turn(8);
+game_controller.check_win(game_controller.player1.get_sign());
+game_controller.check_draw();
 console.log(gameboard.array);
