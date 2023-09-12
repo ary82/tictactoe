@@ -11,7 +11,7 @@ const gameboard = (() => {
     }
     return _posssible_moves;
   };
-  const win_situations = [
+  const _win_situations = [
     [0, 1, 2],
     [3, 4, 5],
     [6, 7, 8],
@@ -24,10 +24,10 @@ const gameboard = (() => {
   const check_win_situations = (arr) => {
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 3; j++) {
-        if (!arr.includes(win_situations[i][j])) {
+        if (!arr.includes(_win_situations[i][j])) {
           break;
         }
-        if (arr.includes(win_situations[i][j]) && j === 2) {
+        if (arr.includes(_win_situations[i][j]) && j === 2) {
           return true;
         }
       }
