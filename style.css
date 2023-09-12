@@ -75,6 +75,7 @@ input[type="radio"]:checked + label {
   border-radius: 1rem;
   transition:
     background-color ease-in-out 150ms,
+    transform ease-in-out 125ms,
     color ease-in-out 150ms,
     border-radius ease-in-out 150ms;
 }
@@ -102,8 +103,30 @@ input[type="radio"]:checked + label {
 label {
   display: flex;
   justify-content: center;
+  cursor: pointer;
+  transition: transform ease-in-out 125ms;
 }
 #select_sign svg {
   width: 3rem;
   height: 3rem;
+}
+button {
+  color: var(--bg-clr);
+  background-color: var(--accent1-clr);
+  font-size: 2rem;
+  padding: 1rem 4rem;
+  border-radius: 1rem;
+  border: none;
+  display: block;
+  margin: 1.5rem auto;
+  transition: transform 125ms ease-in-out;
+  cursor: pointer;
+}
+label:hover,
+button:hover {
+  transform: scale(1.05);
+}
+#status {
+  font-size: 1.5rem;
+  text-align: center;
 }
