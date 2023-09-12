@@ -11,11 +11,6 @@ const gameboard = (() => {
     }
     return _posssible_moves;
   };
-  const clear = () => {
-    array.fill(undefined);
-    game_controller.player1.moves = [];
-    game_controller.player2.moves = [];
-  };
   const win_situations = [
     [0, 1, 2],
     [3, 4, 5],
@@ -40,7 +35,7 @@ const gameboard = (() => {
     return false;
   };
 
-  return { array, possible_moves, check_win_situations, clear };
+  return { array, possible_moves, check_win_situations };
 })();
 
 const player = (sign) => {
@@ -114,6 +109,12 @@ const game_controller = (() => {
 const display_controller = (() => {
   const ttt_html = document.querySelectorAll("#game_board > div");
   const comp_button = document.getElementById("computer");
+  const pl_buttons = document.querySelectorAll("input");
+  pl_buttons.forEach((element) => {
+    element.addEventListener("input", () => {
+      document.location.reload();
+    });
+  });
   ttt_html.forEach((element) => {
     element.addEventListener("click", () => {
       if (comp_button.checked) {
@@ -122,8 +123,15 @@ const display_controller = (() => {
           game_controller.player2.random_allowed_move(),
         );
         console.log(gameboard.array);
+      } else {
+        game_controller.player1.play_turn(parseInt(element.dataset.board));
+        game_controller.player2.play_turn(parseInt(element.dataset.board));
+        console.log(gameboard.array);
       }
     });
+  });
+  document.querySelector("button").addEventListener("click", () => {
+    document.location.reload();
   });
   const display_on_grid = () => {
     ttt_html.forEach((element) => {
