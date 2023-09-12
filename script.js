@@ -57,6 +57,7 @@ const player = (sign) => {
       game_controller.current_turn = (sign === "x") ? "o" : "x";
       game_controller.check_win(get_sign());
       game_controller.check_draw();
+      display_controller.display_on_grid();
     }
   };
   const random_allowed_move = () => {
@@ -113,26 +114,42 @@ const game_controller = (() => {
 const display_controller = (() => {
   const ttt_html = document.querySelectorAll("#game_board > div");
   const comp_button = document.getElementById("computer");
-  const player_button = document.getElementById("player2");
-  const compete_buttons = document.querySelectorAll("#compete > input");
-
-  compete_buttons.forEach((element) => {
-    element.addEventListener("input", gameboard.clear());
-  });
   ttt_html.forEach((element) => {
     element.addEventListener("click", () => {
-      console.log("click");
-      if (comp_button.checked === true) {
-        console.log("comp battle");
-      } else {
-        console.log("pl battle");
+      if (comp_button.checked) {
+        game_controller.player1.play_turn(parseInt(element.dataset.board));
+        game_controller.player2.play_turn(
+          game_controller.player2.random_allowed_move(),
+        );
+        console.log(gameboard.array);
       }
     });
   });
+  const display_on_grid = () => {
+    ttt_html.forEach((element) => {
+      element.innerText = "";
+    });
+    const x_sign_existing = document.querySelector(
+      '#select_sign > label[for="x"] > svg',
+    );
+    const o_sign_existing = document.querySelector(
+      '#select_sign > label[for="o"] > svg',
+    );
+    for (let i = 0; i < gameboard.array.length; i++) {
+      if (gameboard.array[i] == "x") {
+        let x_sign = x_sign_existing.cloneNode(true);
+        document.querySelector(`[data-board="${i}"]`)
+          .appendChild(
+            x_sign,
+          );
+      } else if (gameboard.array[i] == "o") {
+        let o_sign = o_sign_existing.cloneNode(true);
+        document.querySelector(`[data-board="${i}"]`)
+          .appendChild(
+            o_sign,
+          );
+      }
+    }
+  };
+  return { display_on_grid };
 })();
-
-console.log(gameboard.possible_moves());
-game_controller.player1.play_turn(0);
-game_controller.check_win(game_controller.player1.get_sign());
-game_controller.check_draw();
-console.log(gameboard.array);
