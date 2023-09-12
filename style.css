@@ -79,8 +79,7 @@ input[type="radio"]:checked + label {
     border-radius ease-in-out 150ms;
 }
 #select_sign,
-#compete,
-#difficulty {
+#compete {
   display: flex;
   font-size: 1.4rem;
   justify-content: center;
@@ -93,18 +92,12 @@ input[type="radio"]:checked + label {
   padding-top: 1rem;
 }
 #select_sign > *,
-#compete > *,
-#difficulty > * {
+#compete > * {
   padding: 0.3rem;
   width: 10rem;
 }
-#compete > *,
-#difficulty > * {
+#compete > * {
   padding: 0.6rem;
-}
-#difficulty {
-  padding: 0.5rem;
-  padding-bottom: 1rem;
 }
 label {
   display: flex;
