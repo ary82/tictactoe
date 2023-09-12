@@ -113,9 +113,17 @@ const display_controller = (() => {
   const ttt_html = document.querySelectorAll("#game_board > div");
   const comp_button = document.getElementById("computer");
   const pl_buttons = document.querySelectorAll("#compete > input");
+  const pl2 = document.getElementById("player2");
+  const comp = document.getElementById("computer");
+  if (localStorage.getItem("active_btn" == "player2")) {
+    pl2.checked = true;
+  } else {
+    comp.checked = true;
+  }
   pl_buttons.forEach((element) => {
     element.addEventListener("input", () => {
       document.location.reload();
+      localStorage.setItem("active_btn", JSON.stringify(element.id));
     });
   });
   ttt_html.forEach((element) => {
