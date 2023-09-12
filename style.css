@@ -46,6 +46,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 #game_board :first-child {
   border-top-left-radius: 25%;
