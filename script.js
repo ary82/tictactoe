@@ -55,6 +55,8 @@ const player = (sign) => {
       moves.push(index);
       gameboard.array[index] = get_sign();
       game_controller.current_turn = (sign === "x") ? "o" : "x";
+      game_controller.check_win(get_sign());
+      game_controller.check_draw();
     }
   };
   const random_allowed_move = () => {
@@ -106,6 +108,27 @@ const game_controller = (() => {
     check_win,
     check_draw,
   };
+})();
+
+const display_controller = (() => {
+  const ttt_html = document.querySelectorAll("#game_board > div");
+  const comp_button = document.getElementById("computer");
+  const player_button = document.getElementById("player2");
+  const compete_buttons = document.querySelectorAll("#compete > input");
+
+  compete_buttons.forEach((element) => {
+    element.addEventListener("input", gameboard.clear());
+  });
+  ttt_html.forEach((element) => {
+    element.addEventListener("click", () => {
+      console.log("click");
+      if (comp_button.checked === true) {
+        console.log("comp battle");
+      } else {
+        console.log("pl battle");
+      }
+    });
+  });
 })();
 
 console.log(gameboard.possible_moves());
