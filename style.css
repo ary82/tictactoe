@@ -26,7 +26,7 @@ h1 {
   text-align: center;
   font-size: 3.5rem;
   margin: 0;
-  padding: 2rem;
+  padding: 1.5rem 0 0.8rem 0;
   font-weight: 500;
   text-shadow: 3px 3px var(--accent1-clr);
 }
@@ -69,6 +69,12 @@ input[type="radio"] {
   -webkit-appearance: none;
   display: none;
 }
+label {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform ease-in-out 125ms;
+}
 input[type="radio"]:checked + label {
   color: var(--bg-clr);
   background-color: var(--accent1-clr);
@@ -82,30 +88,21 @@ input[type="radio"]:checked + label {
 #select_sign,
 #compete {
   display: flex;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   justify-content: center;
   align-items: center;
   gap: 1rem;
   max-width: 30rem;
   margin: 0 auto;
-}
-#select_sign {
-  padding-top: 1rem;
+  padding: 0.5rem;
 }
 #select_sign > *,
 #compete > * {
-  padding: 0.3rem;
+  padding: 0.15rem;
   width: 10rem;
 }
 #compete > * {
   padding: 0.8rem;
-  margin-bottom: 2rem;
-}
-label {
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform ease-in-out 125ms;
 }
 #select_sign svg {
   width: 3rem;
@@ -114,7 +111,7 @@ label {
 button {
   color: var(--bg-clr);
   background-color: var(--accent1-clr);
-  font-size: 2rem;
+  font-size: 1.8rem;
   padding: 1rem 4rem;
   border-radius: 1rem;
   border: none;
@@ -128,6 +125,16 @@ button:hover {
   transform: scale(1.05);
 }
 #status {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   text-align: center;
+  margin: 0 auto;
+}
+.win {
+  color: var(--accent2-clr);
+}
+.lose {
+  color: var(--accent3-clr);
+}
+.draw {
+  color: var(--accent1-clr);
 }
