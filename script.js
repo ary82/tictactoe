@@ -130,6 +130,11 @@ const display_controller = (() => {
   const o_btn = document.getElementById("o");
   const x_btn = document.getElementById("x");
 
+  // Set sessionStorage if it does not exist
+  if (!sessionStorage.getItem("selected_sign")) {
+    sessionStorage.setItem("selected_sign", JSON.stringify("x"));
+  }
+
   // Update checked buttons from sessionStorage if available
   if (sessionStorage.getItem("opponent") === '"computer"') {
     comp_button.checked = true;
@@ -189,12 +194,12 @@ const display_controller = (() => {
   const display_status = (sign, does_winner_exist) => {
     const status = document.getElementById("status");
     if (does_winner_exist) {
-      if (JSON.parse(sessionStorage.getItem("selected_sign")) != sign) {
-        status.classList.add("lose");
-        status.innerText = "Oh no! " + `${sign}`.toUpperCase() + " wins!";
-      } else {
+      if (JSON.parse(sessionStorage.getItem("selected_sign")) == sign) {
         status.classList.add("win");
         status.innerText = `${sign}`.toUpperCase() + " wins! Congratulations!";
+      } else {
+        status.classList.add("lose");
+        status.innerText = "Oh no! " + `${sign}`.toUpperCase() + " wins!";
       }
     } else {
       status.classList.add("draw");
