@@ -30,7 +30,6 @@ h1 {
   font-weight: 500;
   text-shadow: 3px 3px var(--accent1-clr);
 }
-
 #game_board {
   display: grid;
   grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
@@ -71,6 +70,7 @@ input[type="radio"] {
 }
 label {
   display: flex;
+  border-radius: 1rem;
   justify-content: center;
   cursor: pointer;
   transition: transform ease-in-out 125ms;
@@ -78,12 +78,7 @@ label {
 input[type="radio"]:checked + label {
   color: var(--bg-clr);
   background-color: var(--accent1-clr);
-  border-radius: 1rem;
-  transition:
-    background-color ease-in-out 150ms,
-    transform ease-in-out 125ms,
-    color ease-in-out 150ms,
-    border-radius ease-in-out 150ms;
+  transition: transform ease-in-out 125ms;
 }
 #select_sign,
 #compete {
@@ -96,13 +91,13 @@ input[type="radio"]:checked + label {
   margin: 0 auto;
   padding: 0.5rem;
 }
-#select_sign > *,
-#compete > * {
+#select_sign > * {
   padding: 0.15rem;
   width: 10rem;
 }
 #compete > * {
   padding: 0.8rem;
+  width: 10rem;
 }
 #select_sign svg {
   width: 3rem;
