@@ -106,7 +106,7 @@ input[type="radio"]:checked + label {
 button {
   color: var(--bg-clr);
   background-color: var(--accent1-clr);
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   padding: 1rem 4rem;
   border-radius: 1rem;
   border: none;
