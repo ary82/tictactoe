@@ -1,3 +1,4 @@
+// Gameboard Module
 const gameboard = (() => {
   let array = new Array(9);
   array.fill(undefined);
@@ -11,6 +12,7 @@ const gameboard = (() => {
     }
     return _posssible_moves;
   };
+
   const _win_situations = [
     [0, 1, 2],
     [3, 4, 5],
@@ -21,6 +23,7 @@ const gameboard = (() => {
     [0, 4, 8],
     [2, 4, 6],
   ];
+
   const check_win_situations = (arr) => {
     for (let i = 0; i < 8; i++) {
       for (let j = 0; j < 3; j++) {
@@ -38,9 +41,11 @@ const gameboard = (() => {
   return { array, possible_moves, check_win_situations };
 })();
 
+// Player factory function
 const player = (sign) => {
   const get_sign = () => sign;
   const moves = [];
+
   const play_turn = (index) => {
     if (
       (game_controller.current_turn === get_sign()) &&
@@ -55,10 +60,12 @@ const player = (sign) => {
       display_controller.display_on_grid();
     }
   };
+
   const random_allowed_move = () => {
     let _index = Math.floor(Math.random() * gameboard.possible_moves().length);
     return gameboard.possible_moves()[_index];
   };
+
   return {
     get_sign,
     play_turn,
@@ -67,12 +74,15 @@ const player = (sign) => {
   };
 };
 
+// Game Controller Module
 const game_controller = (() => {
   const player1 = player("x");
   const player2 = player("o");
   let _running = true;
   let current_turn = "x";
+
   const check_running = () => _running;
+
   const check_win = (sign) => {
     if (sign === player1.get_sign()) {
       if (gameboard.check_win_situations(player1.moves)) {
@@ -89,6 +99,7 @@ const game_controller = (() => {
     }
     return false;
   };
+
   const check_draw = () => {
     if (_running) {
       if (!gameboard.possible_moves().length) {
@@ -99,6 +110,7 @@ const game_controller = (() => {
     }
     return false;
   };
+
   return {
     player1,
     player2,
@@ -109,15 +121,16 @@ const game_controller = (() => {
   };
 })();
 
+// Display Controller Module
 const display_controller = (() => {
+  // Declare DOM constants
   const ttt_html = document.querySelectorAll("#game_board > div");
   const comp_button = document.getElementById("computer");
   const pl2_button = document.getElementById("player2");
-  const pl_buttons = document.querySelectorAll("#compete > input");
   const o_btn = document.getElementById("o");
   const x_btn = document.getElementById("x");
-  const xo_buttons = document.querySelectorAll("#select_sign > input");
 
+  // Update checked buttons from sessionStorage if available
   if (sessionStorage.getItem("opponent") === '"computer"') {
     comp_button.checked = true;
   } else if (sessionStorage.getItem("opponent") === '"player2"') {
@@ -129,18 +142,25 @@ const display_controller = (() => {
     o_btn.checked = true;
   }
 
-  pl_buttons.forEach((element) => {
-    element.addEventListener("input", () => {
-      sessionStorage.setItem("opponent", JSON.stringify(element.id));
-      document.location.reload();
-    });
+  // Event Listener for updating sessionStorage
+  comp_button.addEventListener("input", () => {
+    sessionStorage.setItem("opponent", JSON.stringify(comp_button.id));
+    document.location.reload();
   });
-  xo_buttons.forEach((element) => {
-    element.addEventListener("input", () => {
-      sessionStorage.setItem("selected_sign", JSON.stringify(element.id));
-      document.location.reload();
-    });
+  pl2_button.addEventListener("input", () => {
+    sessionStorage.setItem("opponent", JSON.stringify(pl2_button.id));
+    document.location.reload();
   });
+  x_btn.addEventListener("input", () => {
+    sessionStorage.setItem("selected_sign", JSON.stringify(x_btn.id));
+    document.location.reload();
+  });
+  o_btn.addEventListener("input", () => {
+    sessionStorage.setItem("selected_sign", JSON.stringify(o_btn.id));
+    document.location.reload();
+  });
+
+  // Grid Event Listener
   ttt_html.forEach((element) => {
     element.addEventListener("click", () => {
       if (comp_button.checked && !o_btn.checked) {
@@ -148,31 +168,41 @@ const display_controller = (() => {
         game_controller.player2.play_turn(
           game_controller.player2.random_allowed_move(),
         );
-        console.log(gameboard.array);
       } else if (comp_button.checked && o_btn.checked) {
         game_controller.player2.play_turn(parseInt(element.dataset.board));
         game_controller.player1.play_turn(
           game_controller.player1.random_allowed_move(),
         );
-        console.log(gameboard.array);
       } else {
         game_controller.player1.play_turn(parseInt(element.dataset.board));
         game_controller.player2.play_turn(parseInt(element.dataset.board));
-        console.log(gameboard.array);
       }
     });
   });
+
+  // Restart Button Event Listener
   document.querySelector("button").addEventListener("click", () => {
     document.location.reload();
   });
+
+  // Status Line display function
   const display_status = (sign, does_winner_exist) => {
     const status = document.getElementById("status");
     if (does_winner_exist) {
-      status.innerText = `${sign} wins!`;
+      if (JSON.parse(sessionStorage.getItem("selected_sign")) == sign) {
+        status.classList.add("win");
+        status.innerText = `${sign}`.toUpperCase() + " wins! Congratulations!";
+      } else {
+        status.classList.add("lose");
+        status.innerText = "Oh no! " + `${sign}`.toUpperCase() + " wins!";
+      }
     } else {
+      status.classList.add("draw");
       status.innerText = "It's a draw!";
     }
   };
+
+  // Function for displaying the Game
   const display_on_grid = () => {
     ttt_html.forEach((element) => {
       element.innerText = "";
