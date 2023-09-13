@@ -112,18 +112,47 @@ const game_controller = (() => {
 const display_controller = (() => {
   const ttt_html = document.querySelectorAll("#game_board > div");
   const comp_button = document.getElementById("computer");
+  const pl2_button = document.getElementById("player2");
   const pl_buttons = document.querySelectorAll("#compete > input");
+  const o_btn = document.getElementById("o");
+  const x_btn = document.getElementById("x");
+  const xo_buttons = document.querySelectorAll("#select_sign > input");
+
+  if (sessionStorage.getItem("opponent") === '"computer"') {
+    comp_button.checked = true;
+  } else if (sessionStorage.getItem("opponent") === '"player2"') {
+    pl2_button.checked = true;
+  }
+  if (sessionStorage.getItem("selected_sign") === '"x"') {
+    x_btn.checked = true;
+  } else if (sessionStorage.getItem("selected_sign") === '"o"') {
+    o_btn.checked = true;
+  }
+
   pl_buttons.forEach((element) => {
     element.addEventListener("input", () => {
+      sessionStorage.setItem("opponent", JSON.stringify(element.id));
+      document.location.reload();
+    });
+  });
+  xo_buttons.forEach((element) => {
+    element.addEventListener("input", () => {
+      sessionStorage.setItem("selected_sign", JSON.stringify(element.id));
       document.location.reload();
     });
   });
   ttt_html.forEach((element) => {
     element.addEventListener("click", () => {
-      if (comp_button.checked) {
+      if (comp_button.checked && !o_btn.checked) {
         game_controller.player1.play_turn(parseInt(element.dataset.board));
         game_controller.player2.play_turn(
           game_controller.player2.random_allowed_move(),
+        );
+        console.log(gameboard.array);
+      } else if (comp_button.checked && o_btn.checked) {
+        game_controller.player2.play_turn(parseInt(element.dataset.board));
+        game_controller.player1.play_turn(
+          game_controller.player1.random_allowed_move(),
         );
         console.log(gameboard.array);
       } else {
