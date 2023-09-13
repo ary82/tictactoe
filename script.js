@@ -189,12 +189,12 @@ const display_controller = (() => {
   const display_status = (sign, does_winner_exist) => {
     const status = document.getElementById("status");
     if (does_winner_exist) {
-      if (JSON.parse(sessionStorage.getItem("selected_sign")) == sign) {
-        status.classList.add("win");
-        status.innerText = `${sign}`.toUpperCase() + " wins! Congratulations!";
-      } else {
+      if (JSON.parse(sessionStorage.getItem("selected_sign")) != sign) {
         status.classList.add("lose");
         status.innerText = "Oh no! " + `${sign}`.toUpperCase() + " wins!";
+      } else {
+        status.classList.add("win");
+        status.innerText = `${sign}`.toUpperCase() + " wins! Congratulations!";
       }
     } else {
       status.classList.add("draw");
